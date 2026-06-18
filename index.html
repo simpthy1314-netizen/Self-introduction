@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body { background-color: #f0f0f0; font-family: 'Noto Sans TC', sans-serif; color: #000; font-size:1.322rem; }
+  body { background-color: #f0f0f0; font-family: 'Noto Sans TC', sans-serif; color: #000; font-size:clamp(0.95rem, 0.85rem + 0.6vw, 1.322rem); }
 
   /* ── 漫畫基礎 ── */
   .manga-page { background-color: #fff; border: 5px solid #000; padding: 20px; box-shadow: 15px 15px 0px #000; position: relative; overflow: hidden; }
@@ -21,7 +21,7 @@
   .volleyball-net { position:absolute; inset:0; background-image: linear-gradient(rgba(0,0,0,0.1) 2px, transparent 2px), linear-gradient(90deg,rgba(0,0,0,0.1) 2px,transparent 2px); background-size:30px 30px; transform:skewX(-15deg); opacity:0.6; }
 
   /* ── 文字特效 ── */
-  .manga-title { font-weight:900; font-size:2.875rem; border-bottom:8px solid #000; display:inline-block; margin-bottom:10px; }
+  .manga-title { font-weight:900; font-size:clamp(1.6rem, 1.2rem + 2.5vw, 2.875rem); border-bottom:8px solid #000; display:inline-block; margin-bottom:10px; }
   .impact-text { font-weight:900; color:#ff0000; text-shadow:3px 3px 0px #000; transform:scale(1.1) rotate(-3deg); display:inline-block; }
   .speech-bubble { position:relative; background:#fff; border:3px solid #000; border-radius:20px; padding:12px; display:inline-block; font-weight:900; font-size:0.897rem; }
 
@@ -104,12 +104,44 @@
   .status-active { background:#00cc44; color:#fff; }
   .status-plan { background:#0000ff; color:#fff; }
 
-  /* ── 響應 ── */
+  /* ── 響應：平板 / 小筆電（≤1024px） ── */
+  @media(max-width:1024px) {
+    .manga-page { padding:14px; box-shadow:8px 8px 0px #000; }
+    .sensor-grid, .domain-grid { grid-template-columns:repeat(3,1fr); }
+    .timeline::before { left:95px; }
+    .tl-item { grid-template-columns:88px 18px 1fr; }
+  }
+
+  /* ── 響應：平板（≤768px） ── */
   @media(max-width:768px) {
-    .manga-title { font-size:1.84rem; }
+    body { padding:0.6rem; }
+    .manga-page { padding:12px; box-shadow:6px 6px 0px #000; }
+    .manga-nav-btn { font-size:0.85rem; padding:8px 6px; }
     .sensor-grid, .domain-grid { grid-template-columns:1fr 1fr; }
     .timeline::before { left:72px; }
     .tl-item { grid-template-columns:65px 16px 1fr; }
+    .speech-bubble { font-size:0.8rem; }
+  }
+
+  /* ── 響應：手機（≤480px） ── */
+  @media(max-width:480px) {
+    .manga-page { padding:10px; box-shadow:5px 5px 0px #000; border-width:3px; }
+    .manga-nav-btn { font-size:0.75rem; padding:7px 4px; }
+    .sensor-grid, .domain-grid { grid-template-columns:1fr; }
+    .timeline { padding-left:0; }
+    .timeline::before { left:8px; }
+    .tl-item { grid-template-columns:18px 1fr; grid-template-areas:"dot date" "dot content"; gap:0.2rem 0.6rem; }
+    .tl-item .tl-dot { grid-area:dot; }
+    .tl-item .tl-date { grid-area:date; text-align:left; font-size:0.7rem; }
+    .tl-item .tl-content { grid-area:content; }
+    .photo-cell img { height:90px; }
+    .project-card { padding:0.9rem; }
+    .domain-item, .sensor-item, .learning-item { padding:0.8rem; }
+  }
+
+  /* ── 響應：極窄手機（≤380px） ── */
+  @media(max-width:380px) {
+    .manga-nav-btn { font-size:0.65rem; padding:6px 2px; letter-spacing:-0.02em; }
   }
 
   /* ── reveal 動畫（捲動） ── */
@@ -163,13 +195,13 @@
   ⚡ 智慧聯網 ／ 📈 跨域行銷
       </span>
       </div>
-      <div class="font-black text-3xl mt-2">
-        AGE: <span class="text-red-600 text-4xl ml-1">23</span>
-        <span class="ml-4 font-mono text-base font-bold text-black">AIoT ｜ CAD ｜ 專案執行</span>
+      <div class="font-black text-xl sm:text-3xl mt-2">
+        AGE: <span class="text-red-600 text-2xl sm:text-4xl ml-1">23</span>
+        <span class="ml-4 font-mono text-sm sm:text-base font-bold text-black">AIoT ｜ CAD ｜ 專案執行</span>
       </div>
     </div>
     <div class="mt-3 md:mt-0">
-      <div class="speech-bubble">「跨越行銷與技術的界線，<br>解鎖智慧製造的新篇章！」</div>
+      <div class="speech-bubble">「跨越行銷與技術的界線，<br>正在解鎖智慧製造的新篇章！」</div>
     </div>
   </div>
 
@@ -182,11 +214,11 @@
 
         <!-- 左：任務說明 -->
         <div class="md:col-span-8 manga-panel p-5 speed-lines min-h-[220px] flex flex-col justify-center border-r-8 border-r-yellow-400 reveal">
-          <h2 class="text-2xl font-black mb-2 bg-yellow-300 inline-block px-2">Challenge: 跨域轉職冒險</h2>
+          <h2 class="text-2xl font-black mb-2 bg-yellow-300 inline-block px-2">MISSION: 跨域轉職冒險</h2>
           <p class="text-xl leading-relaxed font-bold mb-3">
             從行銷領域出發，投入新竹市職訓局<br>
             <span class="text-red-600">AIoT 智慧物聯網</span>培訓課程，<br>
-            朝理工轉職，累積工程實作能力。
+            朝理工科轉職，累積工程實作能力。
           </p>
           <div class="flex flex-wrap gap-2 mb-3">
             <div class="border-2 border-black p-1 font-black text-sm rotate-1">#AutoCAD</div>
@@ -196,7 +228,7 @@
             <div class="border-2 border-black p-1 font-black text-sm rotate-1">#Python</div>
           </div>
           <!-- 數據卡 -->
-          <div class="grid grid-cols-3 gap-3 mt-1">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-1">
             <a href="#" onclick="switchPage('projects',document.querySelectorAll('.manga-nav-btn')[2],'proj-ball-robot');return false;" class="border-3 border-black p-3 bg-white text-center hover:bg-yellow-300 transition-all hover:-translate-y-1 hover:shadow-[3px_3px_0_#000] cursor-pointer no-underline text-black">
               <div class="font-black text-3xl text-red-600 stat-num">2+</div>
               <div class="text-sm font-bold">完成工程<br>實作專案</div>
@@ -228,9 +260,9 @@
           <div class="volleyball-net"></div>
           <div class="action-lines"></div>
           <div class="relative z-10 flex flex-col md:flex-row items-center gap-5">
-            <div class="text-7xl animate-bounce pointer-events-none filter drop-shadow-[5px_5px_0px_rgba(0,0,0,1)]">🏐</div>
+            <div class="text-5xl sm:text-7xl animate-bounce pointer-events-none filter drop-shadow-[5px_5px_0px_rgba(0,0,0,1)]">🏐</div>
             <div class="text-center md:text-left">
-              <p class="impact-text text-4xl mb-1">9.94秒!</p>
+              <p class="impact-text text-3xl sm:text-4xl mb-1">9.94秒!</p>
               <div class="bg-white/90 p-2 border-2 border-black shadow-[4px_4px_0px_#000] rotate-1">
                 <p class="font-black text-lg">如同排球場上的殺球——精準、果斷</p>
                 <p class="font-black text-xl text-red-600 mt-1">🏆 球形機器人專案・分組第一名</p>
@@ -625,7 +657,7 @@
   </div><!-- end manga-content -->
 
   <!-- ── 導覽按鈕 ── -->
-  <div class="mt-6 grid grid-cols-3 md:grid-cols-5 gap-2 relative z-10">
+  <div class="mt-6 grid grid-cols-5 gap-1.5 sm:gap-2 relative z-10">
     <button class="manga-nav-btn active" onclick="switchPage('home',this)">🏠 首頁</button>
     <button class="manga-nav-btn" onclick="switchPage('skills',this)">⚔️ 技能</button>
     <button class="manga-nav-btn" onclick="switchPage('projects',this)">🔧 專案</button>
